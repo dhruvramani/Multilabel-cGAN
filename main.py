@@ -7,7 +7,7 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, concatenate
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-num_epoch, batch_size = 1000, 50
+num_epoch, batch_size = 100 50
 input_dim, random_dim, output_dim = 500, 100, 983
 x = (Input(shape = (input_dim, ), dtype='float32'))
 noise = (Input(shape=(random_dim, ), dtype='float32'))
@@ -107,7 +107,7 @@ def train():
             discriminator.trainable = True
             print(" Gen. Loss : {}".format(g_loss[1]), end="\r\r")
             
-            if index % 10 == 9:
+            if(int(index % 100) == 9):
                 generator.save_weights('generator', True)
                 discriminator.save_weights('discriminator', True)
 
