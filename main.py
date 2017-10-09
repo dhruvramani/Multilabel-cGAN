@@ -90,7 +90,7 @@ def train():
     noise = np.zeros((batch_size, random_dim))
     for epoch in range(num_epoch):
         num_batches = int(X_train.shape[0] / batch_size)
-        print("Epoch : {}, Number of Epochs : {}".format(epoch, num_batches))
+        print("Epoch : {}".format(epoch))
         for index in range(num_batches):
             for i in range(batch_size):
                 noise[i, :] = np.random.uniform(-1, 1, random_dim)
@@ -105,7 +105,7 @@ def train():
             discriminator.trainable = False
             g_loss = disc_on_gen.train_on_batch([x_batch, noise], [y_batch ,np.asarray([1] * batch_size, dtype=np.float32)])
             discriminator.trainable = True
-            print(" Gen. Loss : {}".format(index, g_loss), end="\r\r")
+            print(" Gen. Loss : {}".format(g_loss[1]), end="\r\r")
             
             if index % 10 == 9:
                 generator.save_weights('generator', True)
