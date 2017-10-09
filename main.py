@@ -7,8 +7,8 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, concatenate
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-num_epoch, batch_size = 100 50
-input_dim, random_dim, output_dim = 500, 100, 983
+num_epoch, batch_size = 100, 50
+input_dim, random_dim, output_dim = 500, 100, 983 # For 'Delicious' dataset
 x = (Input(shape = (input_dim, ), dtype='float32'))
 noise = (Input(shape=(random_dim, ), dtype='float32'))
 y = (Input(shape = (output_dim, ), dtype='float32'))
