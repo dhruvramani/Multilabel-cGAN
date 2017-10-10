@@ -14,6 +14,10 @@ x = (Input(shape = (input_dim, ), dtype='float32'))
 noise = (Input(shape=(random_dim, ), dtype='float32'))
 y = (Input(shape = (output_dim, ), dtype='float32'))
 
+def log_output(output):
+    with open("train.log", "a+") as f:
+        f.write(output)
+
 def get_data(path, noise=False):
     data = np.load(path)
     if noise == True :
@@ -102,15 +106,21 @@ def train():
             X = np.concatenate((real_pairs, fake_pairs))
             Y = np.asarray([1] * batch_size + [0] * batch_size, dtype=np.float32)
             d_loss = discriminator.train_on_batch(X, Y)
-            print("Batch {} -  Disc. Loss : {} ".format(index, d_loss), end="")
+            output = "Batch {} -  Disc. Loss : {} ".format(index, d_loss)
+            log_output(output)
+            print(output, end="")
             discriminator.trainable = False
             g_loss = disc_on_gen.train_on_batch([x_batch, noise], [y_batch ,np.asarray([1] * batch_size, dtype=np.float32)])
             discriminator.trainable = True
-            print(" Gen. Loss : {}".format(g_loss[1]), end="\r\r")
+            output = " Gen. Loss : {}".format(g_loss[1])
+            log_output(output)
+            print(output, end="\r\r")
             if(int(index % 100) == 9):
                 generator.save_weights('generator', True)
                 discriminator.save_weights('discriminator', True)
-        print("Metrics: {} ".format(eval_performance.evaluate(fake_y, y_batch)))
+        output = "Metrics: {} ".format(eval_performance.evaluate(fake_y, y_batch))
+        log_output(output)
+        print(output)
 
 def test(data_type='test'):
     X, Y = get_data('./data/delicious/delicious-{}-features.pkl'.format(data_type)), get_data('./data/delicious/delicious-{}-labels.pkl'.format(data_type))
