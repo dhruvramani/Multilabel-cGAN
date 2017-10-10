@@ -16,7 +16,7 @@ y = (Input(shape = (output_dim, ), dtype='float32'))
 
 def log_output(output):
     with open("train.log", "a+") as f:
-        f.write(output)
+        f.write(output + "\n")
 
 def get_data(path, noise=False):
     data = np.load(path)
