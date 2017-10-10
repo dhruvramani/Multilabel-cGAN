@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import eval_performance
 import tensorflow as tf
 from keras import backend as K
 from keras.optimizers import SGD, Adagrad
@@ -106,10 +107,10 @@ def train():
             g_loss = disc_on_gen.train_on_batch([x_batch, noise], [y_batch ,np.asarray([1] * batch_size, dtype=np.float32)])
             discriminator.trainable = True
             print(" Gen. Loss : {}".format(g_loss[1]), end="\r\r")
-            
             if(int(index % 100) == 9):
                 generator.save_weights('generator', True)
                 discriminator.save_weights('discriminator', True)
+        print("Metrics: {} ".format(eval_performance.evaluate(fake_y, y_batch)))
 
 def test(data_type='test'):
     X, Y = get_data('./data/delicious/delicious-{}-features.pkl'.format(data_type)), get_data('./data/delicious/delicious-{}-labels.pkl'.format(data_type))
