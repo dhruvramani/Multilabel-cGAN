@@ -120,7 +120,6 @@ def train():
                 discriminator.save_weights('discriminator', True)
         output = "Metrics: {} ".format(eval_performance.evaluate(fake_y, y_batch))
         log_output(output)
-        print(output)
 
 def test(data_type='test'):
     X, Y = get_data('./data/delicious/delicious-{}-features.pkl'.format(data_type)), get_data('./data/delicious/delicious-{}-labels.pkl'.format(data_type))
