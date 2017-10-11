@@ -98,7 +98,7 @@ def train():
         print("Epoch : {}".format(epoch))
         for index in range(num_batches):
             for i in range(batch_size):
-                noise[i, :] = np.random.uniform(-1, 1, random_dim)
+                noise[i, :] = np.random.normal(-1, 1, random_dim)
             x_batch, y_batch = X_train[index * batch_size : (index + 1) * batch_size], Y_train[index * batch_size : (index + 1) * batch_size]
             fake_y = generator.predict([x_batch, noise], verbose=0)
             real_pairs = np.concatenate((x_batch, y_batch), axis=1)
