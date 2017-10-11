@@ -5,6 +5,7 @@ import tensorflow as tf
 from keras import backend as K
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Input, concatenate
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def get_data(path, noise=False):
     data = np.load(path)
