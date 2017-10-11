@@ -20,7 +20,7 @@ model.add(Dense(600, input_dim=input_dim, activation='relu'))
 model.add(Dense(800, activation='relu'))
 model.add(Dense(output_dim, activation='sigmoid'))
 
-model.compile(loss = 'binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
+model.compile(loss = 'binary_crossentropy', optimizer='sgd', metrics=[eval_performance.patk])
 X_train, X_test, Y_train, Y_test = get_data("./data/delicious/delicious-train-features.pkl"), get_data("./data/delicious/delicious-test-features.pkl"), get_data("./data/delicious/delicious-train-labels.pkl"), get_data("./data/delicious/delicious-test-labels.pkl")
 model.fit(X_train, Y_train, epochs=num_epoch, batch_size = batch_size)
 loss_and_metrics = model.evaluate(X_test, Y_test, batch_size = batch_size)
