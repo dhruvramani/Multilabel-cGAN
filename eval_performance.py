@@ -1,11 +1,10 @@
-
 import sys
 import numpy as np
 from collections import Counter
 from sklearn.metrics import label_ranking_average_precision_score
 from sklearn.metrics import coverage_error, label_ranking_loss, hamming_loss, accuracy_score
 
-def patk(predictions, labels):
+def patk(labels, predictions):
     pak = np.zeros(3)
     K = np.array([1, 3, 5])
     for i in range(predictions.shape[0]):
