@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def get_data(path, noise=False):
     data = np.load(path)
-    if noise == True :p
+    if noise == True :
         data = data + np.random.normal(0, 0.001, data.shape)
     return data
 
