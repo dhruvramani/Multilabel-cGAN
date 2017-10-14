@@ -44,7 +44,6 @@ def generator_model():
 def discriminator_model(): # Concatenated
     global input_dim
     global output_dim
-    global random_dim
     inp = (Input(shape = (input_dim + output_dim, ), dtype='float32'))
     layer1 = Dense(680, input_dim = output_dim + input_dim, activation='relu')(inp)
     layer1 = Dropout(0.5)(layer1)
@@ -84,10 +83,10 @@ def train():
     discriminator = discriminator_model()
     generator = generator_model()
     disc_on_gen = generator_containing_discriminator(generator, discriminator)
-    generator.compile(loss='binary_crossentropy', optimizer='SGD')
-    disc_on_gen.compile(loss=[generator_l1_loss, discriminator_on_generator_loss], optimizer="rmsprop")
+    generator.compile(loss='binary_crossentropy', optimizer='adam')
+    disc_on_gen.compile(loss=[generator_l1_loss, discriminator_on_generator_loss], optimizer="adam")
     discriminator.trainable = True
-    discriminator.compile(loss=discriminator_loss, optimizer="rmsprop")
+    discriminator.compile(loss=discriminator_loss, optimizer="sgd")
     for epoch in range(num_epoch):
         num_batches = int(X_train.shape[0] / batch_size)
         print("Epoch : {}".format(epoch))
@@ -120,6 +119,8 @@ def test(data_type='test'):
     generator.compile(loss='binary_crossentropy', optimizer="SGD")
     generator.load_weights('generator')
     gen_y = generator.predict(X)
+    output = "Test Metrics : {}".format(eval_performance.evaluate(gen_y, Y))
+    print(output)
 
 if __name__ == '__main__':
     train()
