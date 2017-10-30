@@ -24,6 +24,21 @@ def get_data(path, noise=False):
         data = data + np.random.normal(0, 0.001, data.shape)
     return data
 
+
+def top_k_error(self, predictions, labels, k):
+    '''
+    Calculate the top-k error
+    :param predictions: 2D tensor with shape [batch_size, num_labels]
+    :param labels: 1D tensor with shape [batch_size, 1]
+    :param k: int
+    :return: tensor with shape [1]
+    '''
+    batch_size = predictions.get_shape().as_list()[0]
+    in_top1 = tf.to_float(tf.nn.in_top_k(predictions, labels, k=1))
+    num_correct = tf.reduce_sum(in_top1)
+    return (batch_size - num_correct) / float(batch_size)
+
+
 def generator_model():
     global input_dim
     global output_dim
